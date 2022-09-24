@@ -6,7 +6,7 @@ using namespace std;
 struct Node{
     int data;
     struct Node *next;
-}*first = NULL, *second = NULL;
+}*first = NULL, *second = NULL, *third = NULL;
 
 // create a linked list of array
 
@@ -220,9 +220,117 @@ int checkSorted(struct Node *p){
     return 1;
 }
 
+//remove duplicates from linked list
+
+void removeDupli(struct Node *p){
+
+    struct Node *q = p -> next;
+
+    while(q){
+
+        // will move both pointers forward if elements are unique
+        if(q->data != p->data){
+            p = q;
+            q = q->next;
+        }
+
+        //will only move second pointer until both pointers hold different values.
+        else{
+            p -> next = q -> next;
+            delete(q);
+            q = p->next;
+        }
+    }
+
+}
+
+//reversing a linked list
+
+void reversingLL(struct Node *p){
+    struct Node *q=NULL, *r=NULL;
+
+    while(p){
+        r=q;
+        q=p;
+        p = p->next;
+        q -> next = r;
+    }
+    first = q;
+}
+
+//concatinating 2 linked list
+
+void concatinatingLL(struct Node *p, struct Node *second){
+    while(p->next != NULL){
+        p = p->next;
+    }
+    p -> next = second;
+}
+
+//merging 2 sorted linked list
+
+void mergeLL(struct Node *first, struct Node *second){
+    struct Node *last;
+
+    if(first -> data < second -> data){
+        last = third = first;
+        first = first -> next;
+        third -> next = NULL;
+    }
+    else{
+        last = third = second;
+        second = second -> next;
+        third -> next = NULL;
+    }
+
+    while(first && second){
+        if(first -> data < second -> data){
+            last -> next = first;
+            last = first;
+            first = first -> next;
+            last -> next = NULL;
+        }
+        else{
+            last -> next = second;
+            last = second;
+            second = second -> next;
+            last -> next = NULL;
+        }
+    }
+
+    if(first){
+        last -> next = first;
+    }
+    if(second){
+        last -> next = second;
+    }
+}
+
+//checking loop in a linkedlist
+
+bool chkLoop(struct Node *p){
+
+    if(p == NULL){
+        return false;
+    }
+
+    struct Node *q = p;
+
+    while(q != NULL && q -> next != NULL){
+        q = q -> next -> next;
+        p = p -> next;
+
+        if(p == q){
+            return true;
+        }
+    }
+    return false;
+
+}
+
 int main(){
 
-    int Arr[11] = {1,2,3,4,5,6,7,8,9,12,11};
+    int Arr[11] = {1,2,3,4,4,4,5,5,6,12,22};
     create(Arr,11);
     // display(first);
     // recursiveDisplay(first);
@@ -230,9 +338,9 @@ int main(){
     // sumOfAllNodes(first);
     // maxElement(first);
     // searchEle(first, 12);
-    // createUsingInsert(10);
-    // createUsingInsert(20);
-    // createUsingInsert(30);
+    // createUsingInsert(7);
+    // createUsingInsert(9);
+    // createUsingInsert(13);
     // display(second);
     // insertingInLL(first, 0, 15);
     // insertingInLL(first, 3, 22);
@@ -242,6 +350,14 @@ int main(){
     // deletingInLL(22, first);
     // display(first);
     // cout<< checkSorted(first);
+    // removeDupli(first);
+    // reversingLL(first);
+    // display(first);
+    // concatinatingLL(first, second);
+    // display(first);
+    // mergeLL(first,second);
+    // display(third);
+    cout<< chkLoop(first);
 
     return 0;
 
